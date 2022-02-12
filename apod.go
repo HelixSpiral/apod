@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 // NewAPOD returns an APOD with the specified API Key.
@@ -66,6 +67,11 @@ func (a *APOD) Query(queryParams *ApodQueryInput) ([]ApodQueryOutput, error) {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return queryOutput, err
+	}
+
+	// Sometimes the header doesn't update properly so we have a second check for this here.
+	if strings.Contains(string(body), "You have exceeded your rate limit.") {
+		return queryOutput, fmt.Errorf("you have exceeded your rate limit")
 	}
 
 	// Since we're always returning an array we have to do a check for if it's not returning an array
