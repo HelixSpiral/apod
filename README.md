@@ -8,7 +8,11 @@ Usage
 
 Basic date query:
 ```go
-    Apod := apod.NewAPOD("DEMO_KEY")
+    apodInput := &apod.NewAPODInput{
+        APIKey: "DEMO_KEY",
+    }
+
+    Apod := apod.NewAPOD(apodInput)
     date, _ := time.Parse("2006-01-02", "2022-02-11")
     queryInput := &apod.ApodQueryInput{
         Date: date,
@@ -24,11 +28,16 @@ Basic date query:
 
 You can provide a start and end date, with end date defaulting to the current date
 ```go
-    Apod := apod.NewAPOD("DEMO_KEY")
+    apodInput := &apod.NewAPODInput{
+        APIKey: "DEMO_KEY",
+    }
+
+    Apod := apod.NewAPOD(apodInput)
+
     date, _ := time.Parse("2006-01-02", "2022-02-01")
     queryInput := &apod.ApodQueryInput{
         StartDate: date,
-        EndDate: date.Add((time.Hour*24) * 5)),
+        EndDate: date.Add((time.Hour*24) * 5),
     }
     
     resp, err := Apod.Query(queryInput)
@@ -41,7 +50,12 @@ You can provide a start and end date, with end date defaulting to the current da
 
 Providing a count gives you that many random selections
 ```go
-    Apod := apod.NewAPOD("DEMO_KEY")
+    apodInput := &apod.NewAPODInput{
+        APIKey: "DEMO_KEY",
+    }
+
+    Apod := apod.NewAPOD(apodInput)
+
     queryInput := &apod.ApodQueryInput{
         Count: 5,
     }
