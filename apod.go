@@ -8,16 +8,22 @@ import (
 	"strings"
 )
 
-// NewAPOD returns an APOD with the specified API Key.
+// NewAPOD returns an APOD object with the provided settings
 // If no API Key is given we use the DEMO_KEY.
-func NewAPOD(key ...string) *APOD {
+// If no domain is provided it uses the default NASA domain.
+func NewAPOD(settings *NewAPODInput) *APOD {
 	apiKey := "DEMO_KEY"
-	if len(key) > 0 {
-		apiKey = key[0]
+	if len(settings.APIKey) > 0 {
+		apiKey = settings.APIKey
+	}
+
+	apodDomain := "https://api.nasa.gov/planetary/apod?api_key=%s"
+	if len(settings.APODDomain) > 0 {
+		apodDomain = settings.APODDomain
 	}
 
 	return &APOD{
-		apiUrl: fmt.Sprintf("https://api.nasa.gov/planetary/apod?api_key=%s", apiKey),
+		apiUrl: fmt.Sprintf(apodDomain, apiKey),
 	}
 }
 

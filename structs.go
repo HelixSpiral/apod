@@ -7,6 +7,12 @@ type APOD struct {
 	apiUrl string
 }
 
+// NewAPODInput is the input for the NewAPOD function
+type NewAPODInput struct {
+	APIKey     string
+	APODDomain string
+}
+
 // ApodQueryInput is the input for an Apod Query
 type ApodQueryInput struct {
 	Date      time.Time `json:"date"`

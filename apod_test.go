@@ -8,23 +8,45 @@ import (
 )
 
 func TestNewAPOD(t *testing.T) {
+	apodInput := &apod.NewAPODInput{}
 
 	// We can't do a whole lot of checking for this function so we just do this to make sure they don't error.
 	// If they don't, we're good for now.
-	Apod := apod.NewAPOD()
+	Apod := apod.NewAPOD(apodInput)
 	if Apod == nil {
-		t.Fatal("apod didn't return when not providing a key")
+		t.Fatal("apod didn't return when not providing a key or domain")
 	}
 
-	Apod = apod.NewAPOD("DEMO_KEY1")
+	apodInput.APIKey = "DEMO_KEY1"
+
+	Apod = apod.NewAPOD(apodInput)
 	if Apod == nil {
-		t.Fatal("apod didn't return when providing a key")
+		t.Fatal("apod didn't return when providing a key, but no domain")
 	}
 
+	apodInput.APIKey = ""
+	apodInput.APODDomain = "https://api.nasa.gov/planetary/apod?api_key"
+
+	Apod = apod.NewAPOD(apodInput)
+	if Apod == nil {
+		t.Fatal("apod didn't return when providing a domain, but no key")
+	}
+
+	apodInput.APIKey = "DEMO_KEY1"
+	apodInput.APODDomain = "https://api.nasa.gov/planetary/apod?api_key"
+
+	Apod = apod.NewAPOD(apodInput)
+	if Apod == nil {
+		t.Fatal("apod didn't return when providing both a domain and a key")
+	}
 }
 
 func TestQuery(t *testing.T) {
-	Apod := apod.NewAPOD("DEMO_KEY")
+	apodInput := &apod.NewAPODInput{
+		APIKey: "DEMO_KEY",
+	}
+
+	Apod := apod.NewAPOD(apodInput)
 	date, _ := time.Parse("2006-01-02", "2022-02-01")
 
 	// Test for Count with Date. Should error
