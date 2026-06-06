@@ -2,13 +2,13 @@ package apod
 
 import "time"
 
-// APOD is the main struct of our package
-type APOD struct {
+// Client is the main struct of our package
+type Client struct {
 	apiUrl string
 }
 
-// NewAPODInput is the input for the NewAPOD function
-type NewAPODInput struct {
+// Config is the input for the New function
+type Config struct {
 	APIKey     string
 	APODDomain string
 }

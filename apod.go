@@ -8,10 +8,10 @@ import (
 	"strings"
 )
 
-// NewAPOD returns an APOD object with the provided settings
+// New returns an APOD object with the provided settings
 // If no API Key is given we use the DEMO_KEY.
 // If no domain is provided it uses the default NASA domain.
-func NewAPOD(settings *NewAPODInput) *APOD {
+func New(settings *Config) *Client {
 	apiKey := "DEMO_KEY"
 	if len(settings.APIKey) > 0 {
 		apiKey = settings.APIKey
@@ -22,13 +22,13 @@ func NewAPOD(settings *NewAPODInput) *APOD {
 		apodDomain = settings.APODDomain
 	}
 
-	return &APOD{
+	return &Client{
 		apiUrl: fmt.Sprintf(apodDomain, apiKey),
 	}
 }
 
 // Query takes an ApodQueryInput and returns an slice of ApodQueryOutput
-func (a *APOD) Query(queryParams *ApodQueryInput) ([]ApodQueryOutput, error) {
+func (a *Client) Query(queryParams *ApodQueryInput) ([]ApodQueryOutput, error) {
 	var queryOutput []ApodQueryOutput
 
 	// It doesn't matter what the value of thumbs is so we always include it.

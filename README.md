@@ -8,17 +8,17 @@ Usage
 
 Basic date query:
 ```go
-    apodInput := &apod.NewAPODInput{
+    apodCfg := &apod.Config{
         APIKey: "DEMO_KEY",
     }
 
-    Apod := apod.NewAPOD(apodInput)
+    apodClient := apod.New(apodCfg)
     date, _ := time.Parse("2006-01-02", "2022-02-11")
     queryInput := &apod.ApodQueryInput{
         Date: date,
     }
 
-    resp, err := Apod.Query(queryInput)
+    resp, err := apodClient.Query(queryInput)
     if err != nil {
         panic(err)
     }
@@ -28,11 +28,11 @@ Basic date query:
 
 You can provide a start and end date, with end date defaulting to the current date
 ```go
-    apodInput := &apod.NewAPODInput{
+    apodCfg := &apod.Config{
         APIKey: "DEMO_KEY",
     }
 
-    Apod := apod.NewAPOD(apodInput)
+    apodClient := apod.New(apodCfg)
 
     date, _ := time.Parse("2006-01-02", "2022-02-01")
     queryInput := &apod.ApodQueryInput{
@@ -40,7 +40,7 @@ You can provide a start and end date, with end date defaulting to the current da
         EndDate: date.Add((time.Hour*24) * 5),
     }
     
-    resp, err := Apod.Query(queryInput)
+    resp, err := apodClient.Query(queryInput)
     if err != nil {
         panic(err)
     }
@@ -50,17 +50,17 @@ You can provide a start and end date, with end date defaulting to the current da
 
 Providing a count gives you that many random selections
 ```go
-    apodInput := &apod.NewAPODInput{
+    apodCfg := &apod.Config{
         APIKey: "DEMO_KEY",
     }
 
-    Apod := apod.NewAPOD(apodInput)
+    apodClient := apod.New(apodCfg)
 
     queryInput := &apod.ApodQueryInput{
         Count: 5,
     }
     
-    resp, err := Apod.Query(queryInput)
+    resp, err := apodClient.Query(queryInput)
     if err != nil {
         panic(err)
     }
