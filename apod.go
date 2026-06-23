@@ -3,7 +3,7 @@ package apod
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 )
@@ -70,7 +70,7 @@ func (a *Client) Query(queryParams *ApodQueryInput) ([]ApodQueryOutput, error) {
 		return queryOutput, fmt.Errorf("you have exceeded your rate limit")
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return queryOutput, err
 	}
