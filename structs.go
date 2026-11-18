@@ -9,28 +9,28 @@ type Client struct {
 
 // Config is the input for the New function
 type Config struct {
-	APIKey     string
 	APODDomain string
 }
 
 // ApodQueryInput is the input for an Apod Query
 type ApodQueryInput struct {
-	Date      time.Time `json:"date"`
-	StartDate time.Time `json:"start_date"`
-	EndDate   time.Time `json:"end_date"`
-	Count     int       `json:"count"`
-	Thumbs    bool      `json:"thumbs"`
+	DateFrom time.Time `json:"date_fom"`
+	DateTo   time.Time `json:"date_to"`
+
+	// Limit is the number of Pictures to return, this is rounded up to the nearest 25 pictures
+	Limit int
 }
 
-// ApodQueryOutput is the output from an Apod Query
-type ApodQueryOutput struct {
-	Title          string `json:"title,omitempty"`
-	Explanation    string `json:"explanation,omitempty"`
-	Date           string `json:"date,omitempty"`
-	MediaType      string `json:"media_type,omitempty"`
-	Url            string `json:"url,omitempty"`
-	HdUrl          string `json:"hdurl,omitempty"`
-	ThumbnailUrl   string `json:"thumbnail_url,omitempty"`
-	Copyright      string `json:"Copyright,omitempty"`
-	ServiceVersion string `json:"service_version,omitempty"`
+// Picture is the information for a single APOD
+type Picture struct {
+	Date         string `json:"date,omitempty"`
+	PostID       int    `json:"post_id,omitempty"`
+	Title        string `json:"title,omitempty"`
+	Permalink    string `json:"permalink,omitempty"`
+	MediaType    string `json:"media_type,omitempty"`
+	Explanation  string `json:"explanation,omitempty"`
+	Url          string `json:"url,omitempty"`
+	HdUrl        string `json:"hdurl,omitempty"`
+	BasicHTML    string `json:"basic_html,omitempty"`
+	BasicHTMLURL string `json:"basic_html_url,omitempty"`
 }
